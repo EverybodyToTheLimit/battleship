@@ -4,73 +4,61 @@ module.exports.func = function gameboard () { return {
 
     
     coordinates: [],
+
     missedShots: [],
+
     evaluatePlacement(ship, x, y) {
-        let possiblePlacements = {
-            right: [],
-            left: [],
-            top: [],
-            bottom: []
-        }
+        let possiblePlacements = []
+        let placementsClone = []
+        
         for (let i=0; i<ship.length; i++) {
             let coordsRight = {
                 "x" : (x + i),
-                "y" : y
+                "y" : y,
+                "pos": 1
             }
             let coordsLeft = {
                 "x" : (x - i),
-                "y" : y
+                "y" : y,
+                "pos": 2
             }
             let coordsTop = {
                 "x" : x,
-                "y" : (y + i)
+                "y" : (y + i),
+                "pos": 3
             }
             let coordsBottom = {
                 "x" : x,
-                "y" : (y - i)
+                "y" : (y - i),
+                "pos": 4
             }
-        possiblePlacements.right.push(coordsRight)
-        possiblePlacements.left.push(coordsLeft)
-        possiblePlacements.top.push(coordsTop)
-        possiblePlacements.bottom.push(coordsBottom)
+        possiblePlacements.push(coordsRight, coordsLeft, coordsTop, coordsBottom)
         }
-        possiblePlacements.right.forEach(element => {
+
+        possiblePlacements.forEach(element => {
             if(element.x > 10 || element.y > 10 || element.x < 1 || element.y < 1 || (this.coordinates.forEach(element1 => {
                 if (element1.x == element.x && element1.y == element.y) {return true}
             }))) {
-                possiblePlacements.right = []
-                return
-            }
-        })
-        possiblePlacements.left.forEach(element => {
-            if(element.x > 10 || element.y > 10 || element.x < 1 || element.y < 1 || (this.coordinates.forEach(element1 => {
-                if (element1.x == element.x && element1.y == element.y) {return true}
-            }))) {
-                possiblePlacements.left = []
-                return
-            }
-        })
-        possiblePlacements.top.forEach(element => {
-            if(element.x > 10 || element.y > 10 || element.x < 1 || element.y < 1 || (this.coordinates.forEach(element1 => {
-                if (element1.x == element.x && element1.y == element.y) {return true}
-            }))) {
-                possiblePlacements.top = []
-                return
-            }
-        })
-        possiblePlacements.bottom.forEach(element => {
-            if(element.x > 10 || element.y > 10 || element.x < 1 || element.y < 1 || (this.coordinates.forEach(element1 => {
-                if (element1.x == element.x && element1.y == element.y) {return true}
-            }))) {
-                possiblePlacements.bottom = []
-                return
+                placementsClone.push(element)
+                return placementsClone
             }
         })
 
-    console.log(possiblePlacements)
-    console.log(this.coordinates)
-    return possiblePlacements.right.length
+    let uniqueResult = [...new Set(placementsClone.map(item=>item.pos))]
+
+
+    uniqueResult.forEach(element => {
+    possiblePlacements = possiblePlacements.filter(el => {
+        return el.pos !== element})
+    return possiblePlacements
+    })
+
+    
+    if (possiblePlacements.length == 0) {return false}
+    else return possiblePlacements
     },
+
+
     placeShip(ship, x, y) {
         let i = ship.length
         while (i>0) {
