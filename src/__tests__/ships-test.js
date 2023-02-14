@@ -2,7 +2,7 @@ const ship = require("../ships")
 
 
 test("Can ship sink?", () => {
-    let newShip = ship.func(2, "john")
+    let newShip = ship.func(2)
     let i = 1
     while (i<3) {
         newShip.hitReceived()
@@ -10,3 +10,4 @@ test("Can ship sink?", () => {
     }
     expect(newShip.isSunk).toBe(true)
 })
+
