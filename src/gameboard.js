@@ -8,19 +8,44 @@ module.exports.func = function gameboard () { return {
     placeShip(ship, x, y) {
         let i = ship.length
         while (i>0) {
-            let ship = new Object(x, y + i)
-            this.coordinates.push(ship)
+            let placedShip = {
+                x: x, 
+                y: (y + i),
+                name: ship.name,
+                hit: false
+            }
+            this.coordinates.push(placedShip)
             i--
         }
     },
     receiveAttack(x, y) {
-        let hitCheck = this.coordinates.find(element => element == {x, y})
+        let hitCheck = this.coordinates.find(element => {
+            if (element.x == x && element.y == y) {
+                return element.name
+            }})
         if (hitCheck) {
+            hitCheck.hit = true
+            return hitCheck.name
         }
         else {
-            let missedShot = new Object(x, y)
+            let missedShot = {x, y}
             this.missedShots.push(missedShot)
+            return {
+                "missed" : missedShot
+            }
         }
+    },
+
+    checkGameEnd() {
+        let result = true
+        console.log(this.coordinates)
+        this.coordinates.forEach(element => {
+            if (element.hit == false) {
+                result = false
+            }
+        } 
+        )
+    return result
     }
 }
 }
