@@ -53,29 +53,37 @@ module.exports.func = function gameboard () { return {
     return possiblePlacements
     })
 
-    
+
     if (possiblePlacements.length == 0) {return false}
     else return possiblePlacements
     },
 
 
     placeShip(ship, x, y) {
-        let i = ship.length
-        while (i>0) {
-            let placedShip = {
-                x: x, 
-                y: (y + i),
-                name: ship.name,
-                hit: false
-            }
-            this.coordinates.push(placedShip)
-            i--
+        let evaluation = this.evaluatePlacement(ship, x, y)
+        if (evaluation == false) return false
+        else {
+            let options = [...new Set(evaluation.map(item=>item.pos))]
+            let selection = options[Math.floor(Math.random() * options.length)]
+            evaluation = evaluation.filter(el => el.pos == selection)
+            let i = evaluation.length
+            evaluation.forEach(el => {
+                let placedShip = {
+                    x: el.x,
+                    y: el.y,
+                    name: ship.name,
+                    hit: false
+                }
+                this.coordinates.push(placedShip)
+            })
+            return evaluation
         }
     },
+
     receiveAttack(x, y) {
         let hitCheck = this.coordinates.find(element => {
             if (element.x == x && element.y == y) {
-                return element.name
+                return element
             }})
         if (hitCheck) {
             hitCheck.hit = true
