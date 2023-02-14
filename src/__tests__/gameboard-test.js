@@ -44,3 +44,12 @@ test("game not over assesment", () => {
     newGameboard.receiveAttack(4,7)
     expect(newGameboard.checkGameEnd()).toBe(false);
 })
+
+test("placement out of bounds", () => {
+    let newShip = ship.func(4, "battleship")
+    let newShip1 = ship.func(4, "battleship")
+    let newGameboard = gameboard.func()
+    newGameboard.placeShip(newShip, 4, 3)
+    newGameboard.placeShip(newShip1, 5, 4)
+    expect(newGameboard.evaluatePlacement(newShip, 9, 1)).toBe(4)
+})
