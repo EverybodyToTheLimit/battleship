@@ -1,7 +1,9 @@
-module.exports.func = function player (name, mode) { return {
+function player (name, cpu) { return {
 
     name: name,
-    cpu: false,
+    cpu: cpu,
     currentTurn: false
 }
 }
+
+export {player}

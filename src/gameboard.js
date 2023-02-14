@@ -1,6 +1,6 @@
 // create the main gameboard
 
-module.exports.func = function gameboard () { return {
+function gameboard () { return {
 
     
     coordinates: [],
@@ -111,4 +111,4 @@ module.exports.func = function gameboard () { return {
 }
 }
 
-
+export {gameboard}

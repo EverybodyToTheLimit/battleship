@@ -1,6 +1,6 @@
 // create a factory for individual ships
 
-module.exports.func = function ship (length, name) {return {
+function ship (length, name) {return {
     name: name,
     length: length,
     hits: 0,
@@ -12,3 +12,5 @@ module.exports.func = function ship (length, name) {return {
     },
     isSunk: false,
 }}
+
+export {ship}
