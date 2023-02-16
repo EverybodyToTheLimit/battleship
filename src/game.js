@@ -18,16 +18,20 @@ function game(playername) { return {
         let battleship = ship(4, "battleship")
         let cruiser = ship(3, "cruiser")
         let submarine = ship(3, "submarine")
-        let destroyer = ship(3, "destroyer")
-        if(player == this.player1Name) {playerboard = this.player1Gameboard} else {playerboard = this.cpuGameboard}
-        let test = playerboard.placeShip(carrier,randomNumber(), randomNumber())
-        playerboard.placeShip(battleship,randomNumber(), randomNumber())
-        playerboard.placeShip(destroyer,randomNumber(), randomNumber())
-        playerboard.placeShip(cruiser,randomNumber(), randomNumber())
-        playerboard.placeShip(submarine,randomNumber(), randomNumber())
-        return playerboard.coordinates
+        let destroyer = ship(2, "destroyer")
+        let shipArr = []
+        shipArr.push(carrier, battleship, cruiser, submarine,destroyer)
+        if(player == this.player1) {playerboard = this.player1Gameboard} else {playerboard = this.cpuGameboard}
+        
+        shipArr.forEach(ship => {
+            if (playerboard.placeShip(ship,randomNumber(), randomNumber())) {return} else {playerboard.placeShip(ship,randomNumber(), randomNumber())}})
+
+
+
+        return playerboard.coordinatess
 
     }
+
 }
 
 }

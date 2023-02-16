@@ -49,39 +49,29 @@ function gameboard () { return {
             }) 
 
             })
+
+        }
+
+        let notUnique = []
+        for (let i = 0; i<possiblePlacements.length; i ++) {
+            this.coordinates.forEach(el => {
+            if (possiblePlacements[i].x == el.x && possiblePlacements[i].y  == el.y) {
+                notUnique.push(possiblePlacements[i].pos)
+            }
+        })
+        }
+
+        notUnique = notUnique.filter((value, index, array) => array.indexOf(value) === index)
+        if (notUnique) {
+            notUnique.forEach(el => {
+                possiblePlacements = possiblePlacements.filter(function(value, index, array){
+                return value.pos !== el
+            }) 
+
+            })
             return possiblePlacements
         }
 
-
-        // possiblePlacements.forEach(element => {
-        //     if(element.x > 10 || element.y > 10 || element.x < 1 || element.y < 1)
-        //     {
-        //         possiblePlacements.element.x
-        //         return false
-        //     } } )
-
-        // possiblePlacements.forEach(element => {
-        //     if (this.coordinates.forEach(element1 => {
-        //         if (element1.x == element.x && element1.y == element.y) {return false}
-        //     }))
-        //     {return false} 
-        //     else 
-        //     {
-        //         placementsClone.push(element)
-        //         return placementsClone
-        //     }
-        // })
-    
-        
-
-    let uniqueResult = [...new Set(placementsClone.map(item=>item.pos))]
-
-
-    // uniqueResult.forEach(element => {
-    // possiblePlacements = possiblePlacements.filter(el => {
-    //     return el.pos !== element})
-    // return possiblePlacements
-    // })
 
 
     if (possiblePlacements.length == 0) {return false}
@@ -91,7 +81,6 @@ function gameboard () { return {
 
     placeShip(ship, x, y) {
         let evaluation = this.evaluatePlacement(ship, x, y)
-        console.log(evaluation)
         if (evaluation == false) return false
         else {
             let options = [...new Set(evaluation.map(item=>item.pos))]

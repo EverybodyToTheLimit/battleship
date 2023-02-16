@@ -78,16 +78,20 @@ function game(playername) { return {
         let battleship = (0,_ships__WEBPACK_IMPORTED_MODULE_2__.ship)(4, "battleship")
         let cruiser = (0,_ships__WEBPACK_IMPORTED_MODULE_2__.ship)(3, "cruiser")
         let submarine = (0,_ships__WEBPACK_IMPORTED_MODULE_2__.ship)(3, "submarine")
-        let destroyer = (0,_ships__WEBPACK_IMPORTED_MODULE_2__.ship)(3, "destroyer")
-        if(player == this.player1Name) {playerboard = this.player1Gameboard} else {playerboard = this.cpuGameboard}
-        let test = playerboard.placeShip(carrier,randomNumber(), randomNumber())
-        playerboard.placeShip(battleship,randomNumber(), randomNumber())
-        playerboard.placeShip(destroyer,randomNumber(), randomNumber())
-        playerboard.placeShip(cruiser,randomNumber(), randomNumber())
-        playerboard.placeShip(submarine,randomNumber(), randomNumber())
-        return playerboard.coordinates
+        let destroyer = (0,_ships__WEBPACK_IMPORTED_MODULE_2__.ship)(2, "destroyer")
+        let shipArr = []
+        shipArr.push(carrier, battleship, cruiser, submarine,destroyer)
+        if(player == this.player1) {playerboard = this.player1Gameboard} else {playerboard = this.cpuGameboard}
+        
+        shipArr.forEach(ship => {
+            if (playerboard.placeShip(ship,randomNumber(), randomNumber())) {return} else {playerboard.placeShip(ship,randomNumber(), randomNumber())}})
+
+
+
+        return playerboard.coordinatess
 
     }
+
 }
 
 }
@@ -159,39 +163,29 @@ function gameboard () { return {
             }) 
 
             })
+
+        }
+
+        let notUnique = []
+        for (let i = 0; i<possiblePlacements.length; i ++) {
+            this.coordinates.forEach(el => {
+            if (possiblePlacements[i].x == el.x && possiblePlacements[i].y  == el.y) {
+                notUnique.push(possiblePlacements[i].pos)
+            }
+        })
+        }
+
+        notUnique = notUnique.filter((value, index, array) => array.indexOf(value) === index)
+        if (notUnique) {
+            notUnique.forEach(el => {
+                possiblePlacements = possiblePlacements.filter(function(value, index, array){
+                return value.pos !== el
+            }) 
+
+            })
             return possiblePlacements
         }
 
-
-        // possiblePlacements.forEach(element => {
-        //     if(element.x > 10 || element.y > 10 || element.x < 1 || element.y < 1)
-        //     {
-        //         possiblePlacements.element.x
-        //         return false
-        //     } } )
-
-        // possiblePlacements.forEach(element => {
-        //     if (this.coordinates.forEach(element1 => {
-        //         if (element1.x == element.x && element1.y == element.y) {return false}
-        //     }))
-        //     {return false} 
-        //     else 
-        //     {
-        //         placementsClone.push(element)
-        //         return placementsClone
-        //     }
-        // })
-    
-        
-
-    let uniqueResult = [...new Set(placementsClone.map(item=>item.pos))]
-
-
-    // uniqueResult.forEach(element => {
-    // possiblePlacements = possiblePlacements.filter(el => {
-    //     return el.pos !== element})
-    // return possiblePlacements
-    // })
 
 
     if (possiblePlacements.length == 0) {return false}
@@ -201,7 +195,6 @@ function gameboard () { return {
 
     placeShip(ship, x, y) {
         let evaluation = this.evaluatePlacement(ship, x, y)
-        console.log(evaluation)
         if (evaluation == false) return false
         else {
             let options = [...new Set(evaluation.map(item=>item.pos))]
@@ -377,9 +370,12 @@ __webpack_require__.r(__webpack_exports__);
 
 let dom = (0,_dom_helper_js__WEBPACK_IMPORTED_MODULE_0__.domHelper)()
 dom.drawBoard()
-let newGame = (0,_game_js__WEBPACK_IMPORTED_MODULE_1__.game)()
+let newGame = (0,_game_js__WEBPACK_IMPORTED_MODULE_1__.game)("John")
 
-dom.markShips(newGame.deployShips(newGame.player1))
+newGame.deployShips(newGame.player1)
+newGame.deployShips(newGame.player2)
+console.log(newGame)
+dom.markShips(newGame.player1Gameboard.coordinates)
 })();
 
 /******/ })()
