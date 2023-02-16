@@ -14,7 +14,9 @@ function domHelper() { return {
                 field.className = "field"
                 field.id = user + "x" + j + "y" + i
                 if (user == "computer") {
-                    field.addEventListener('click', () => {mainGameLoop([j, i], this)})
+                    field.addEventListener('click', () => {
+                        PubSub.publish('button-click', [j, i]);
+                    })
                 }
                 row.appendChild(field)
             }
@@ -22,6 +24,24 @@ function domHelper() { return {
         }
     main.appendChild(owner)
     },
+
+    updateCell (user, x, y, type)
+        {
+            let cell = document.getElementById(user + "x"+x+"y"+ y)
+            switch (type) {
+                case "miss":
+                    cell.classList.add("miss")
+                    cell.removeEventListener('click', () => {
+                        PubSub.publish('button-click', [j, i]);
+                    })
+                    break
+                case "hit":
+                    cell.classList.add("hit")
+                    cell.removeEventListener('click', () => {
+                        PubSub.publish('button-click', [j, i]);
+                    })
+            }
+        },
 
     markShips(board, user) {
         if (user !== "computer") {

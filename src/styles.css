@@ -21,3 +21,11 @@
     flex-direction: row;
     gap: 30px;
 }
+
+.hit {
+    background-color: red;
+}
+
+.miss {
+    background-color: black;
+}

@@ -2,7 +2,8 @@
 
 function gameboard () { return {
 
-    
+    possibleMoves: [],
+
     coordinates: [],
 
     missedShots: [],
@@ -98,6 +99,22 @@ function gameboard () { return {
             })
             return evaluation
         }
+    },
+
+    populateMoves() {
+        for(let x =  1; x<11; x++) {
+            for (let y = 1; y<11; y++) {
+                this.possibleMoves.push([x, y])
+            }
+        }
+    },
+
+    launchAttach() {
+        const randomIndex = Math.floor(Math.random() * this.possibleMoves.length);
+        let result = this.possibleMoves[randomIndex]
+        this.possibleMoves.splice(randomIndex,1)
+        return result
+
     },
 
     receiveAttack(x, y) {
