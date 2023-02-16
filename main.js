@@ -2,6 +2,49 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/dom-helper.js":
+/*!***************************!*\
+  !*** ./src/dom-helper.js ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "domHelper": () => (/* binding */ domHelper)
+/* harmony export */ });
+function domHelper() { return {
+
+    drawBoard() {
+    let main = document.getElementById("main")
+        for (let i = 10; i>0; i--) {
+            let row = document.createElement('div')
+            row.className = "row"
+            for (let j = 1; j<11; j++) {
+                let field = document.createElement('div')
+                field.className = "field"
+                field.id = "x" + j + "y" + i
+                row.appendChild(field)
+            }
+            main.appendChild(row)
+        }
+    },
+
+    markShips(board) {
+        board.forEach(element => {
+            let cell = document.getElementById("x"+element.x+"y"+element.y)
+            {cell.textContent = "x"}
+        });
+
+        
+    }
+}
+
+}
+
+
+
+/***/ }),
+
 /***/ "./src/game.js":
 /*!*********************!*\
   !*** ./src/game.js ***!
@@ -14,20 +57,42 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _gameboard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gameboard */ "./src/gameboard.js");
 /* harmony import */ var _players__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./players */ "./src/players.js");
+/* harmony import */ var _ships__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ships */ "./src/ships.js");
 
 
 
 
-function game () {
-    let player1 = (0,_players__WEBPACK_IMPORTED_MODULE_1__.player)("John", false)
-    let player2 = (0,_players__WEBPACK_IMPORTED_MODULE_1__.player)("Computer", true)
-    let player1Gameboard = (0,_gameboard__WEBPACK_IMPORTED_MODULE_0__.gameboard)()
-    let player2Gameboard = (0,_gameboard__WEBPACK_IMPORTED_MODULE_0__.gameboard)()
+function game(playername) { return {
+    player1: (0,_players__WEBPACK_IMPORTED_MODULE_1__.player)(playername, false),
+    player2 : (0,_players__WEBPACK_IMPORTED_MODULE_1__.player)("computer", true),
+    player1Gameboard : (0,_gameboard__WEBPACK_IMPORTED_MODULE_0__.gameboard)(),
+    cpuGameboard: (0,_gameboard__WEBPACK_IMPORTED_MODULE_0__.gameboard)(),
+    currentTurn: "",
 
-    return {
-        player1
+    deployShips(player) {
+        let playerboard = null
+        let randomNumber = () => {
+            let result = Math.floor(Math.random() * 10) + 1
+            return result}
+        let carrier = (0,_ships__WEBPACK_IMPORTED_MODULE_2__.ship)(5, "carrier")
+        let battleship = (0,_ships__WEBPACK_IMPORTED_MODULE_2__.ship)(4, "battleship")
+        let cruiser = (0,_ships__WEBPACK_IMPORTED_MODULE_2__.ship)(3, "cruiser")
+        let submarine = (0,_ships__WEBPACK_IMPORTED_MODULE_2__.ship)(3, "submarine")
+        let destroyer = (0,_ships__WEBPACK_IMPORTED_MODULE_2__.ship)(3, "destroyer")
+        if(player == this.player1Name) {playerboard = this.player1Gameboard} else {playerboard = this.cpuGameboard}
+        let test = playerboard.placeShip(carrier,randomNumber(), randomNumber())
+        playerboard.placeShip(battleship,randomNumber(), randomNumber())
+        playerboard.placeShip(destroyer,randomNumber(), randomNumber())
+        playerboard.placeShip(cruiser,randomNumber(), randomNumber())
+        playerboard.placeShip(submarine,randomNumber(), randomNumber())
+        return playerboard.coordinates
+
     }
 }
+
+}
+
+
 
 
 
@@ -79,24 +144,54 @@ function gameboard () { return {
             }
         possiblePlacements.push(coordsRight, coordsLeft, coordsTop, coordsBottom)
         }
-
-        possiblePlacements.forEach(element => {
-            if(element.x > 10 || element.y > 10 || element.x < 1 || element.y < 1 || (this.coordinates.forEach(element1 => {
-                if (element1.x == element.x && element1.y == element.y) {return true}
-            }))) {
-                placementsClone.push(element)
-                return placementsClone
+        let toRemove = []
+        for (let i = 0; i<possiblePlacements.length; i ++) {
+            if (possiblePlacements[i].x > 10 || possiblePlacements[i].y >10 || possiblePlacements[i].x <1 || possiblePlacements[i].y <1) {
+                toRemove.push(possiblePlacements[i].pos)
             }
-        })
+        }
+
+        toRemove = toRemove.filter((value, index, array) => array.indexOf(value) === index)
+        if (toRemove) {
+            toRemove.forEach(el => {
+                possiblePlacements = possiblePlacements.filter(function(value, index, array){
+                return value.pos !== el
+            }) 
+
+            })
+            return possiblePlacements
+        }
+
+
+        // possiblePlacements.forEach(element => {
+        //     if(element.x > 10 || element.y > 10 || element.x < 1 || element.y < 1)
+        //     {
+        //         possiblePlacements.element.x
+        //         return false
+        //     } } )
+
+        // possiblePlacements.forEach(element => {
+        //     if (this.coordinates.forEach(element1 => {
+        //         if (element1.x == element.x && element1.y == element.y) {return false}
+        //     }))
+        //     {return false} 
+        //     else 
+        //     {
+        //         placementsClone.push(element)
+        //         return placementsClone
+        //     }
+        // })
+    
+        
 
     let uniqueResult = [...new Set(placementsClone.map(item=>item.pos))]
 
 
-    uniqueResult.forEach(element => {
-    possiblePlacements = possiblePlacements.filter(el => {
-        return el.pos !== element})
-    return possiblePlacements
-    })
+    // uniqueResult.forEach(element => {
+    // possiblePlacements = possiblePlacements.filter(el => {
+    //     return el.pos !== element})
+    // return possiblePlacements
+    // })
 
 
     if (possiblePlacements.length == 0) {return false}
@@ -106,6 +201,7 @@ function gameboard () { return {
 
     placeShip(ship, x, y) {
         let evaluation = this.evaluatePlacement(ship, x, y)
+        console.log(evaluation)
         if (evaluation == false) return false
         else {
             let options = [...new Set(evaluation.map(item=>item.pos))]
@@ -180,6 +276,35 @@ function player (name, cpu) { return {
 
 
 
+/***/ }),
+
+/***/ "./src/ships.js":
+/*!**********************!*\
+  !*** ./src/ships.js ***!
+  \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ship": () => (/* binding */ ship)
+/* harmony export */ });
+// create a factory for individual ships
+
+function ship (length, name) {return {
+    name: name,
+    length: length,
+    hits: 0,
+    hitReceived() {
+        this.hits = this.hits + 1
+        if (this.length == this.hits) {
+            this.isSunk = true
+        }
+    },
+    isSunk: false,
+}}
+
+
+
 /***/ })
 
 /******/ 	});
@@ -245,10 +370,16 @@ var __webpack_exports__ = {};
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _game_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game.js */ "./src/game.js");
+/* harmony import */ var _dom_helper_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom-helper.js */ "./src/dom-helper.js");
+/* harmony import */ var _game_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game.js */ "./src/game.js");
 
 
-console.log((0,_game_js__WEBPACK_IMPORTED_MODULE_0__.game)())
+
+let dom = (0,_dom_helper_js__WEBPACK_IMPORTED_MODULE_0__.domHelper)()
+dom.drawBoard()
+let newGame = (0,_game_js__WEBPACK_IMPORTED_MODULE_1__.game)()
+
+dom.markShips(newGame.deployShips(newGame.player1))
 })();
 
 /******/ })()
