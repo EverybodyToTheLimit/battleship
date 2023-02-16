@@ -34,24 +34,54 @@ function gameboard () { return {
             }
         possiblePlacements.push(coordsRight, coordsLeft, coordsTop, coordsBottom)
         }
-
-        possiblePlacements.forEach(element => {
-            if(element.x > 10 || element.y > 10 || element.x < 1 || element.y < 1 || (this.coordinates.forEach(element1 => {
-                if (element1.x == element.x && element1.y == element.y) {return true}
-            }))) {
-                placementsClone.push(element)
-                return placementsClone
+        let toRemove = []
+        for (let i = 0; i<possiblePlacements.length; i ++) {
+            if (possiblePlacements[i].x > 10 || possiblePlacements[i].y >10 || possiblePlacements[i].x <1 || possiblePlacements[i].y <1) {
+                toRemove.push(possiblePlacements[i].pos)
             }
-        })
+        }
+
+        toRemove = toRemove.filter((value, index, array) => array.indexOf(value) === index)
+        if (toRemove) {
+            toRemove.forEach(el => {
+                possiblePlacements = possiblePlacements.filter(function(value, index, array){
+                return value.pos !== el
+            }) 
+
+            })
+            return possiblePlacements
+        }
+
+
+        // possiblePlacements.forEach(element => {
+        //     if(element.x > 10 || element.y > 10 || element.x < 1 || element.y < 1)
+        //     {
+        //         possiblePlacements.element.x
+        //         return false
+        //     } } )
+
+        // possiblePlacements.forEach(element => {
+        //     if (this.coordinates.forEach(element1 => {
+        //         if (element1.x == element.x && element1.y == element.y) {return false}
+        //     }))
+        //     {return false} 
+        //     else 
+        //     {
+        //         placementsClone.push(element)
+        //         return placementsClone
+        //     }
+        // })
+    
+        
 
     let uniqueResult = [...new Set(placementsClone.map(item=>item.pos))]
 
 
-    uniqueResult.forEach(element => {
-    possiblePlacements = possiblePlacements.filter(el => {
-        return el.pos !== element})
-    return possiblePlacements
-    })
+    // uniqueResult.forEach(element => {
+    // possiblePlacements = possiblePlacements.filter(el => {
+    //     return el.pos !== element})
+    // return possiblePlacements
+    // })
 
 
     if (possiblePlacements.length == 0) {return false}
@@ -61,6 +91,7 @@ function gameboard () { return {
 
     placeShip(ship, x, y) {
         let evaluation = this.evaluatePlacement(ship, x, y)
+        console.log(evaluation)
         if (evaluation == false) return false
         else {
             let options = [...new Set(evaluation.map(item=>item.pos))]
