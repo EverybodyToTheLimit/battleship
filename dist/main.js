@@ -12,30 +12,50 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "domHelper": () => (/* binding */ domHelper)
 /* harmony export */ });
+/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game */ "./src/game.js");
+
+
 function domHelper() { return {
 
-    drawBoard() {
+    drawBoard(user) {
     let main = document.getElementById("main")
+    let owner = document.createElement('div')
+    owner.className = user
         for (let i = 10; i>0; i--) {
             let row = document.createElement('div')
             row.className = "row"
             for (let j = 1; j<11; j++) {
                 let field = document.createElement('div')
                 field.className = "field"
-                field.id = "x" + j + "y" + i
+                field.id = user + "x" + j + "y" + i
+                if (user == "computer") {
+                    field.addEventListener('click', () => {(0,_game__WEBPACK_IMPORTED_MODULE_0__.mainGameLoop)([j, i], this)})
+                }
                 row.appendChild(field)
             }
-            main.appendChild(row)
+            owner.appendChild(row)
         }
+    main.appendChild(owner)
     },
 
-    markShips(board) {
+    markShips(board, user) {
+        if (user !== "computer") {
         board.forEach(element => {
-            let cell = document.getElementById("x"+element.x+"y"+element.y)
+            let cell = document.getElementById(user + "x"+element.x+"y"+element.y)
             {cell.textContent = "x"}
         });
 
-        
+        }
+        else {
+            
+        board.forEach(element => {
+            let cell = document.getElementById(user + "x"+element.x+"y"+element.y)
+            { if (element.hit == true) {   
+                cell.textContent = "x"
+            }
+            }})
+
+        }
     }
 }
 
@@ -53,32 +73,42 @@ function domHelper() { return {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "game": () => (/* binding */ game)
+/* harmony export */   "game": () => (/* binding */ game),
+/* harmony export */   "mainGameLoop": () => (/* binding */ mainGameLoop)
 /* harmony export */ });
-/* harmony import */ var _gameboard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gameboard */ "./src/gameboard.js");
-/* harmony import */ var _players__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./players */ "./src/players.js");
-/* harmony import */ var _ships__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ships */ "./src/ships.js");
+/* harmony import */ var _dom_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom-helper */ "./src/dom-helper.js");
+/* harmony import */ var _gameboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./gameboard */ "./src/gameboard.js");
+/* harmony import */ var _players__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./players */ "./src/players.js");
+/* harmony import */ var _ships__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ships */ "./src/ships.js");
+
 
 
 
 
 function game(playername) { return {
-    player1: (0,_players__WEBPACK_IMPORTED_MODULE_1__.player)(playername, false),
-    player2 : (0,_players__WEBPACK_IMPORTED_MODULE_1__.player)("computer", true),
-    player1Gameboard : (0,_gameboard__WEBPACK_IMPORTED_MODULE_0__.gameboard)(),
-    cpuGameboard: (0,_gameboard__WEBPACK_IMPORTED_MODULE_0__.gameboard)(),
+    player1: (0,_players__WEBPACK_IMPORTED_MODULE_2__.player)(playername, false),
+    player2 : (0,_players__WEBPACK_IMPORTED_MODULE_2__.player)("computer", true),
+    player1Gameboard : (0,_gameboard__WEBPACK_IMPORTED_MODULE_1__.gameboard)(),
+    cpuGameboard: (0,_gameboard__WEBPACK_IMPORTED_MODULE_1__.gameboard)(),
     currentTurn: "",
+
+    refresh() {
+        let dom = (0,_dom_helper__WEBPACK_IMPORTED_MODULE_0__.domHelper)()
+        dom.drawBoard(this.player2.name)
+        dom.drawBoard(this.player1.name)
+        dom.markShips(this.player1Gameboard.coordinates, this.player1.name)
+    },
 
     deployShips(player) {
         let playerboard = null
         let randomNumber = () => {
             let result = Math.floor(Math.random() * 10) + 1
             return result}
-        let carrier = (0,_ships__WEBPACK_IMPORTED_MODULE_2__.ship)(5, "carrier")
-        let battleship = (0,_ships__WEBPACK_IMPORTED_MODULE_2__.ship)(4, "battleship")
-        let cruiser = (0,_ships__WEBPACK_IMPORTED_MODULE_2__.ship)(3, "cruiser")
-        let submarine = (0,_ships__WEBPACK_IMPORTED_MODULE_2__.ship)(3, "submarine")
-        let destroyer = (0,_ships__WEBPACK_IMPORTED_MODULE_2__.ship)(2, "destroyer")
+        let carrier = (0,_ships__WEBPACK_IMPORTED_MODULE_3__.ship)(5, "carrier")
+        let battleship = (0,_ships__WEBPACK_IMPORTED_MODULE_3__.ship)(4, "battleship")
+        let cruiser = (0,_ships__WEBPACK_IMPORTED_MODULE_3__.ship)(3, "cruiser")
+        let submarine = (0,_ships__WEBPACK_IMPORTED_MODULE_3__.ship)(3, "submarine")
+        let destroyer = (0,_ships__WEBPACK_IMPORTED_MODULE_3__.ship)(2, "destroyer")
         let shipArr = []
         shipArr.push(carrier, battleship, cruiser, submarine,destroyer)
         if(player == this.player1) {playerboard = this.player1Gameboard} else {playerboard = this.cpuGameboard}
@@ -92,7 +122,26 @@ function game(playername) { return {
 
     }
 
+
+
+
 }
+
+}
+
+function mainGameLoop (event, newGame) {
+    if (event !== undefined) {
+        newGame.cpuGameboard.receiveAttack()
+    }
+    else {
+    let newGame = game("John")
+    newGame.deployShips(newGame.player1)
+    newGame.deployShips(newGame.player2)
+    newGame.refresh()
+    console.log(newGame)
+
+
+    }
 
 }
 
@@ -363,19 +412,10 @@ var __webpack_exports__ = {};
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _dom_helper_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom-helper.js */ "./src/dom-helper.js");
-/* harmony import */ var _game_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game.js */ "./src/game.js");
+/* harmony import */ var _game_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game.js */ "./src/game.js");
 
 
-
-let dom = (0,_dom_helper_js__WEBPACK_IMPORTED_MODULE_0__.domHelper)()
-dom.drawBoard()
-let newGame = (0,_game_js__WEBPACK_IMPORTED_MODULE_1__.game)("John")
-
-newGame.deployShips(newGame.player1)
-newGame.deployShips(newGame.player2)
-console.log(newGame)
-dom.markShips(newGame.player1Gameboard.coordinates)
+(0,_game_js__WEBPACK_IMPORTED_MODULE_0__.mainGameLoop)()
 })();
 
 /******/ })()

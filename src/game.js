@@ -1,3 +1,4 @@
+import { domHelper } from "./dom-helper"
 import { gameboard } from "./gameboard"
 import { player } from "./players"
 import { ship } from "./ships"
@@ -8,6 +9,13 @@ function game(playername) { return {
     player1Gameboard : gameboard(),
     cpuGameboard: gameboard(),
     currentTurn: "",
+
+    refresh() {
+        let dom = domHelper()
+        dom.drawBoard(this.player2.name)
+        dom.drawBoard(this.player1.name)
+        dom.markShips(this.player1Gameboard.coordinates, this.player1.name)
+    },
 
     deployShips(player) {
         let playerboard = null
@@ -32,10 +40,32 @@ function game(playername) { return {
 
     }
 
+
+
+
 }
 
 }
 
+function mainGameLoop (event, newGame) {
+    if (event !== undefined) {
+        newGame.cpuGameboard.receiveAttack()
+    }
+    else {
+    let newGame = game("John")
+    newGame.deployShips(newGame.player1)
+    newGame.deployShips(newGame.player2)
+    newGame.refresh()
+    console.log(newGame)
 
 
-export {game}
+    }
+
+}
+
+
+
+export {
+        game,
+        mainGameLoop
+    }

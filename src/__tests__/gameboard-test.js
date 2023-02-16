@@ -47,5 +47,5 @@ test("placement out of bounds", () => {
     let newGameboard = gameboard()
     expect(newGameboard.placeShip(newShip, -4, 3)).toBe(false)
     expect(newGameboard.placeShip(newShip1, 5, 14)).toBe(false)
-    expect(newGameboard.evaluatePlacement(newShip, 9, -1)).toBe(false)
+    expect(newGameboard.evaluatePlacement(newShip, 9, -1)).toHaveLength(0)
 })
