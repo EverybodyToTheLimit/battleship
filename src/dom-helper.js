@@ -31,15 +31,9 @@ function domHelper() { return {
             switch (type) {
                 case "miss":
                     cell.classList.add("miss")
-                    cell.removeEventListener('click', () => {
-                        PubSub.publish('button-click', [j, i]);
-                    })
                     break
                 case "hit":
                     cell.classList.add("hit")
-                    cell.removeEventListener('click', () => {
-                        PubSub.publish('button-click', [j, i]);
-                    })
             }
         },
 

@@ -8,6 +8,8 @@ function gameboard () { return {
 
     missedShots: [],
 
+    targetOptions: [],
+
     evaluatePlacement(ship, x, y) {
         let possiblePlacements = []
         let placementsClone = []
@@ -109,13 +111,41 @@ function gameboard () { return {
         }
     },
 
-    launchAttach() {
+    launchAttack() {
+
+        if (this.targetOptions.length == 0) {
         const randomIndex = Math.floor(Math.random() * this.possibleMoves.length);
         let result = this.possibleMoves[randomIndex]
         this.possibleMoves.splice(randomIndex,1)
         return result
+        }
+        else {
+            let result = this.targetOptions[0];
+            this.targetOptions.splice(0,1)
+            return result
+        }
 
     },
+
+    hitHunt(coords) {
+        let tempArray = []
+        tempArray.push([coords[0] -1 , coords[1]], [coords[0] +1 , coords[1]], [coords[0], coords[1] -1], [coords[0], coords[1] + 1])
+        tempArray = tempArray.filter(function(el) {
+            return el[0] < 11 && el[0] > 0 && el[1] < 11 && el[1]
+        })
+        tempArray.forEach(el => {
+            for (let i=0; i<this.possibleMoves.length; i++) {
+                if (el[0] == this.possibleMoves[i][0] && el[1] == this.possibleMoves[i][1]) {
+                    this.targetOptions.push(el)
+                    this.possibleMoves.splice(i, 1)
+                }
+            }
+            }
+        )
+
+
+        },
+
 
     receiveAttack(x, y) {
         let hitCheck = this.coordinates.find(element => {

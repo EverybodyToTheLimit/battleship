@@ -8,7 +8,7 @@
     height: 50px;
     border-width: 1px;
     border-style: solid;
-    border-color: bisque;
+    border-color: #332C23;
 }
 
 .row {
@@ -23,9 +23,11 @@
 }
 
 .hit {
-    background-color: red;
+    background-color: #88527F;
+    pointer-events: none;
 }
 
 .miss {
-    background-color: black;
+    background-color: #B1DDF1;
+    pointer-events: none;
 }

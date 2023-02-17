@@ -39,6 +39,10 @@ function game(playername) { return {
 
         return playerboard.coordinatess
 
+    },
+
+    deployShipsManually () {
+        
     }
 
 
@@ -62,12 +66,18 @@ function mainGameLoop () {
         }
         else {dom.updateCell("computer", data[0], data[1],"hit")}
         if (newGame.cpuGameboard.checkGameEnd()) console.log(newGame.player1.name + " wins!" )
-        let cpuCoordinates = newGame.cpuGameboard.launchAttach()
+
+        let cpuCoordinates = newGame.cpuGameboard.launchAttack()
         let resultcpu = newGame.player1Gameboard.receiveAttack(cpuCoordinates[0], cpuCoordinates[1])
         if (typeof resultcpu == "object") {
         dom.updateCell(newGame.player1.name, cpuCoordinates[0], cpuCoordinates[1],"miss")
         }
-        else {dom.updateCell(newGame.player1.name, cpuCoordinates[0], cpuCoordinates[1],"hit")}
+        else {
+            dom.updateCell(newGame.player1.name, cpuCoordinates[0], cpuCoordinates[1],"hit");
+            newGame.cpuGameboard.hitHunt(cpuCoordinates)
+        }
+        
+        
         if (newGame.player1Gameboard.checkGameEnd()) {
             console.log(newGame.player2.name + " wins!" )
             return

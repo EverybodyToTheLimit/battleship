@@ -413,15 +413,9 @@ function domHelper() { return {
             switch (type) {
                 case "miss":
                     cell.classList.add("miss")
-                    cell.removeEventListener('click', () => {
-                        PubSub.publish('button-click', [j, i]);
-                    })
                     break
                 case "hit":
                     cell.classList.add("hit")
-                    cell.removeEventListener('click', () => {
-                        PubSub.publish('button-click', [j, i]);
-                    })
             }
         },
 
@@ -511,6 +505,10 @@ function game(playername) { return {
 
         return playerboard.coordinatess
 
+    },
+
+    deployShipsManually () {
+        
     }
 
 
@@ -534,12 +532,18 @@ function mainGameLoop () {
         }
         else {dom.updateCell("computer", data[0], data[1],"hit")}
         if (newGame.cpuGameboard.checkGameEnd()) console.log(newGame.player1.name + " wins!" )
-        let cpuCoordinates = newGame.cpuGameboard.launchAttach()
+
+        let cpuCoordinates = newGame.cpuGameboard.launchAttack()
         let resultcpu = newGame.player1Gameboard.receiveAttack(cpuCoordinates[0], cpuCoordinates[1])
         if (typeof resultcpu == "object") {
         dom.updateCell(newGame.player1.name, cpuCoordinates[0], cpuCoordinates[1],"miss")
         }
-        else {dom.updateCell(newGame.player1.name, cpuCoordinates[0], cpuCoordinates[1],"hit")}
+        else {
+            dom.updateCell(newGame.player1.name, cpuCoordinates[0], cpuCoordinates[1],"hit");
+            newGame.cpuGameboard.hitHunt(cpuCoordinates)
+        }
+        
+        
         if (newGame.player1Gameboard.checkGameEnd()) {
             console.log(newGame.player2.name + " wins!" )
             return
@@ -577,6 +581,8 @@ function gameboard () { return {
     coordinates: [],
 
     missedShots: [],
+
+    targetOptions: [],
 
     evaluatePlacement(ship, x, y) {
         let possiblePlacements = []
@@ -679,13 +685,41 @@ function gameboard () { return {
         }
     },
 
-    launchAttach() {
+    launchAttack() {
+
+        if (this.targetOptions.length == 0) {
         const randomIndex = Math.floor(Math.random() * this.possibleMoves.length);
         let result = this.possibleMoves[randomIndex]
         this.possibleMoves.splice(randomIndex,1)
         return result
+        }
+        else {
+            let result = this.targetOptions[0];
+            this.targetOptions.splice(0,1)
+            return result
+        }
 
     },
+
+    hitHunt(coords) {
+        let tempArray = []
+        tempArray.push([coords[0] -1 , coords[1]], [coords[0] +1 , coords[1]], [coords[0], coords[1] -1], [coords[0], coords[1] + 1])
+        tempArray = tempArray.filter(function(el) {
+            return el[0] < 11 && el[0] > 0 && el[1] < 11 && el[1]
+        })
+        tempArray.forEach(el => {
+            for (let i=0; i<this.possibleMoves.length; i++) {
+                if (el[0] == this.possibleMoves[i][0] && el[1] == this.possibleMoves[i][1]) {
+                    this.targetOptions.push(el)
+                    this.possibleMoves.splice(i, 1)
+                }
+            }
+            }
+        )
+
+
+        },
+
 
     receiveAttack(x, y) {
         let hitCheck = this.coordinates.find(element => {
