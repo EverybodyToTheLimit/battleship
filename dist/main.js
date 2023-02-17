@@ -385,6 +385,7 @@ __webpack_require__.r(__webpack_exports__);
 function domHelper() { return {
 
     drawBoard(user) {
+
     let main = document.getElementById("main")
     let owner = document.createElement('div')
     owner.className = user
@@ -395,6 +396,14 @@ function domHelper() { return {
                 let field = document.createElement('div')
                 field.className = "field"
                 field.id = user + "x" + j + "y" + i
+                field.addEventListener('dragenter', (e) => {
+                    PubSub.publish('drag', e)})
+                field.addEventListener('dragOver', (e) => {
+                    PubSub.publish('drag', e)})
+                field.addEventListener('dragleave', (e) => {
+                    PubSub.publish('dragLeave', e)})
+                field.addEventListener('drop', (e) => {
+                    PubSub.publish('drop', e)})
                 if (user == "computer") {
                     field.addEventListener('click', () => {
                         PubSub.publish('button-click', [j, i]);
@@ -405,6 +414,69 @@ function domHelper() { return {
             owner.appendChild(row)
         }
     main.appendChild(owner)
+
+    this.draggAndDrop()
+
+    },
+
+    draggAndDrop () {
+        var dragover = function (msg, data) {
+            data.preventDefault();
+            data.target.classList.add('drag-over');
+        }
+        var dragleave = function (msg, data) {
+            data.preventDefault();
+            data.target.classList.remove('drag-over');
+        }
+        var drop = function (msg, data) {
+            data.target.classList.remove('drag-over');
+
+            // get the draggable element
+            const id = data.dataTransfer.getData('text/plain');
+            const draggable = document.getElementById(id);
+
+            // add it to the drop target
+            data.target.appendChild(draggable);
+
+            // display the draggable element
+            draggable.classList.remove('hide');
+        }
+
+        var dragstart = function(message, data) {
+            data.dataTransfer.setData('text/plain', data.target.id);
+            setTimeout(() => {
+                data.target.classList.add('hide');
+            }, 0);
+        }
+
+        PubSub.subscribe('drag', dragover);
+        PubSub.subscribe('dragLeave', dragleave);
+        PubSub.subscribe('drop', drop);
+        PubSub.subscribe('dragstart', dragstart);
+    
+
+    },
+    
+    
+    drawShipsManual() {
+        let main = document.getElementById("main")
+        let shipList = ["carrier", "battleship", "cruiser", "submarine", "destroyer"]
+
+        let shipContainer = document.createElement("div")
+        shipContainer.id = "shipcontainer"
+
+        shipList.forEach(el => {
+            let el1 = document.createElement("div")
+            el1.id = el
+            el1.className = "ship"
+            el1.draggable = true
+            el1.addEventListener('dragstart', (e) => {
+                PubSub.publish('dragstart', e)
+            })
+            shipContainer.appendChild(el1)
+        })
+  
+        main.appendChild(shipContainer)
     },
 
     updateCell (user, x, y, type)
@@ -479,9 +551,9 @@ function game(playername) { return {
 
     refresh() {
         let dom = (0,_dom_helper__WEBPACK_IMPORTED_MODULE_0__.domHelper)()
-        dom.drawBoard(this.player2.name)
+        // dom.drawBoard(this.player2.name)
         dom.drawBoard(this.player1.name)
-        dom.markShips(this.player1Gameboard.coordinates, this.player1.name)
+        // dom.markShips(this.player1Gameboard.coordinates, this.player1.name)
     },
 
     deployShips(player) {
@@ -507,9 +579,6 @@ function game(playername) { return {
 
     },
 
-    deployShipsManually () {
-        
-    }
 
 
 
@@ -525,6 +594,7 @@ function mainGameLoop () {
     newGame.deployShips(newGame.player2)
     newGame.cpuGameboard.populateMoves()
     newGame.refresh()
+    dom.drawShipsManual()
     var mySubscriber = function (msg, data) {
         let result = newGame.cpuGameboard.receiveAttack(data[0], data[1])
         if (typeof result == "object") {

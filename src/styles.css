@@ -8,7 +8,7 @@
     height: 50px;
     border-width: 1px;
     border-style: solid;
-    border-color: #332C23;
+    border-color: #52483b;
 }
 
 .row {
@@ -17,8 +17,10 @@
 }
 
 #main {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
     gap: 30px;
 }
 
@@ -30,4 +32,50 @@
 .miss {
     background-color: #B1DDF1;
     pointer-events: none;
+}
+
+#shipcontainer {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.ship {
+    display:flex;
+    height: 50px;
+}
+
+#carrier { 
+    width: 250px;
+    background-color: #b1ddf1;
+}
+
+#battleship { 
+    width: 200px;
+    background-color: #9f87af;
+}
+
+#cruiser { 
+    width: 150px;
+    background-color: #88527f;
+}
+
+#submarine { 
+    width: 100px;
+    background-color: #614344;
+}
+
+#destroyer { 
+    width: 100px;
+    background-color: #332c23;
+}
+
+.drag-over {
+    background-color: #575a4b7c;
+}
+
+.hide {
+    display: none;
 }

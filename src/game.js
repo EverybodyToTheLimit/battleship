@@ -13,9 +13,9 @@ function game(playername) { return {
 
     refresh() {
         let dom = domHelper()
-        dom.drawBoard(this.player2.name)
+        // dom.drawBoard(this.player2.name)
         dom.drawBoard(this.player1.name)
-        dom.markShips(this.player1Gameboard.coordinates, this.player1.name)
+        // dom.markShips(this.player1Gameboard.coordinates, this.player1.name)
     },
 
     deployShips(player) {
@@ -41,9 +41,6 @@ function game(playername) { return {
 
     },
 
-    deployShipsManually () {
-        
-    }
 
 
 
@@ -59,6 +56,7 @@ function mainGameLoop () {
     newGame.deployShips(newGame.player2)
     newGame.cpuGameboard.populateMoves()
     newGame.refresh()
+    dom.drawShipsManual()
     var mySubscriber = function (msg, data) {
         let result = newGame.cpuGameboard.receiveAttack(data[0], data[1])
         if (typeof result == "object") {
