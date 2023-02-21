@@ -195,11 +195,25 @@ function domHelper() { return {
     winnerTakeover(user) {
         let winnerDiv = document.createElement('div')
         let winnerMsg = document.createElement('div')
+        let winnerBtn = document.createElement('button')
         winnerDiv.classList.add("take-over")
+        winnerDiv.id = "take-over"
         winnerMsg.textContent = user + " wins!"
         winnerMsg.classList.add("winner-message")
+        winnerBtn.textContent = "Replay?"
+        winnerBtn.addEventListener('click', () => {
+            PubSub.publish('new-round')
+        })
         winnerDiv.appendChild(winnerMsg)
+        winnerDiv.appendChild(winnerBtn)
         document.body.appendChild(winnerDiv)
+    },
+
+    clearScreen() {
+        let main = document.getElementById("main")
+        let takeOver = document.getElementById("take-over")
+        main.innerHTML = ""
+        if (takeOver !== null) takeOver.remove()
     },
     
     clearBoard(board, user) {
@@ -221,7 +235,8 @@ function domHelper() { return {
     
             }
     }
-}
+}   
+
 
 }
 

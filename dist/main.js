@@ -577,11 +577,25 @@ function domHelper() { return {
     winnerTakeover(user) {
         let winnerDiv = document.createElement('div')
         let winnerMsg = document.createElement('div')
+        let winnerBtn = document.createElement('button')
         winnerDiv.classList.add("take-over")
+        winnerDiv.id = "take-over"
         winnerMsg.textContent = user + " wins!"
         winnerMsg.classList.add("winner-message")
+        winnerBtn.textContent = "Replay?"
+        winnerBtn.addEventListener('click', () => {
+            PubSub.publish('new-round')
+        })
         winnerDiv.appendChild(winnerMsg)
+        winnerDiv.appendChild(winnerBtn)
         document.body.appendChild(winnerDiv)
+    },
+
+    clearScreen() {
+        let main = document.getElementById("main")
+        let takeOver = document.getElementById("take-over")
+        main.innerHTML = ""
+        if (takeOver !== null) takeOver.remove()
     },
     
     clearBoard(board, user) {
@@ -603,7 +617,8 @@ function domHelper() { return {
     
             }
     }
-}
+}   
+
 
 }
 
@@ -621,6 +636,7 @@ function domHelper() { return {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "game": () => (/* binding */ game),
+/* harmony export */   "gameController": () => (/* binding */ gameController),
 /* harmony export */   "mainGameLoop": () => (/* binding */ mainGameLoop)
 /* harmony export */ });
 /* harmony import */ var _dom_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom-helper */ "./src/dom-helper.js");
@@ -634,6 +650,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+function gameController(name) {
+    mainGameLoop(name)
+}
 
 function game(playername) { return {
     player1: (0,_players__WEBPACK_IMPORTED_MODULE_2__.player)(playername, false),
@@ -692,9 +713,9 @@ function game(playername) { return {
 
 }
 
-function mainGameLoop () {
+function mainGameLoop (name) {
     let dom = (0,_dom_helper__WEBPACK_IMPORTED_MODULE_0__.domHelper)()
-    let newGame = game("John")
+    let newGame = game(name)
 
     var clear = function (msg,data) {
 
@@ -711,7 +732,7 @@ function mainGameLoop () {
         dom.markShips(newGame.player1Gameboard.coordinates, newGame.player1.name)
         dom.removeShipSection()
         dom.drawBoard(newGame.player2.name)
-        dom.winnerTakeover(newGame.player1.name)
+
     }
 
     newGame.deployShips(newGame.player2)
@@ -748,10 +769,19 @@ function mainGameLoop () {
             return
         }
     };
+
+    var cleanUp = () => {
+        dom.clearScreen()
+        newGame = {}
+        location.reload()
+
+
+    }
     var token = pubsub_js__WEBPACK_IMPORTED_MODULE_4___default().subscribe('button-click', mySubscriber);
     pubsub_js__WEBPACK_IMPORTED_MODULE_4___default().subscribe('drop', shipDroppped);
     pubsub_js__WEBPACK_IMPORTED_MODULE_4___default().subscribe('deploy-random', randomise);
     pubsub_js__WEBPACK_IMPORTED_MODULE_4___default().subscribe('clear-board', clear);
+    pubsub_js__WEBPACK_IMPORTED_MODULE_4___default().subscribe('new-round', cleanUp)
 
     
 
@@ -1103,7 +1133,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _game_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game.js */ "./src/game.js");
 
 
-(0,_game_js__WEBPACK_IMPORTED_MODULE_0__.mainGameLoop)()
+(0,_game_js__WEBPACK_IMPORTED_MODULE_0__.gameController)("John")
+
 })();
 
 /******/ })()

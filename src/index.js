@@ -1,3 +1,3 @@
-import { game, mainGameLoop} from "./game.js";
+import { gameController, game, mainGameLoop} from "./game.js";
 
-mainGameLoop()
+gameController("John")

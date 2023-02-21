@@ -4,6 +4,11 @@ import { player } from "./players"
 import { ship } from "./ships"
 import PubSub from 'pubsub-js'
 
+
+function gameController(name) {
+    mainGameLoop(name)
+}
+
 function game(playername) { return {
     player1: player(playername, false),
     player2 : player("computer", true),
@@ -61,9 +66,9 @@ function game(playername) { return {
 
 }
 
-function mainGameLoop () {
+function mainGameLoop (name) {
     let dom = domHelper()
-    let newGame = game("John")
+    let newGame = game(name)
 
     var clear = function (msg,data) {
 
@@ -80,7 +85,7 @@ function mainGameLoop () {
         dom.markShips(newGame.player1Gameboard.coordinates, newGame.player1.name)
         dom.removeShipSection()
         dom.drawBoard(newGame.player2.name)
-        dom.winnerTakeover(newGame.player1.name)
+
     }
 
     newGame.deployShips(newGame.player2)
@@ -117,10 +122,19 @@ function mainGameLoop () {
             return
         }
     };
+
+    var cleanUp = () => {
+        dom.clearScreen()
+        newGame = {}
+        location.reload()
+
+
+    }
     var token = PubSub.subscribe('button-click', mySubscriber);
     PubSub.subscribe('drop', shipDroppped);
     PubSub.subscribe('deploy-random', randomise);
     PubSub.subscribe('clear-board', clear);
+    PubSub.subscribe('new-round', cleanUp)
 
     
 
@@ -130,5 +144,6 @@ function mainGameLoop () {
 
 export {
         game,
-        mainGameLoop
+        mainGameLoop,
+        gameController
     }
