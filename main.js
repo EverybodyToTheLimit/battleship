@@ -397,6 +397,8 @@ function domHelper() { return {
                 let field = document.createElement('div')
                 field.className = "field"
                 field.id = user + "x" + j + "y" + i
+                field.dataset.x = j
+                field.dataset.y = i
                 field.addEventListener('dragenter', (e) => {
                     PubSub.publish('drag', e)})
                 field.addEventListener('dragOver', (e) => {
@@ -408,7 +410,7 @@ function domHelper() { return {
                     e.preventDefault()
                     let id = e.dataTransfer.getData('text');
                     let message = []
-                    message.push({"id" : id}, {"dest": e.target})
+                    message.push({"id" : id}, {"x": e.target.dataset.x}, {"y": e.target.dataset.y}, {e})
 
                     PubSub.publish('drop', message)})
                 if (user == "computer") {
@@ -420,7 +422,7 @@ function domHelper() { return {
             }
             owner.appendChild(row)
         }
-    main.appendChild(owner)
+    main.insertBefore(owner, main.firstChild)
 
     this.draggAndDrop()
 
@@ -440,38 +442,68 @@ function domHelper() { return {
             data.preventDefault();
             data.target.classList.remove('drag-over');
         }
-        var drop = function (msg, data) {
-
-
-            // get the draggable element
-            const draggable = document.getElementById(data);
-            _game__WEBPACK_IMPORTED_MODULE_0__.game.deployShipManual(data)
-        }
 
         var dragstart = function(message, data) {
             data.preventDefault();
             data.dataTransfer.setData("text", data.target.id);
-            console.log(data.dataTransfer)
             setTimeout(() => {
                 data.target.classList.add('hide');
             }, 0);
         }
 
+        var drop = function(message, data) {
+            data[3].e.target.classList.remove('drag-over')
+            let ship = document.getElementById(data[0].id)
+            ship.remove()
+        }
+
+        var noOption = function(message, data) {
+            let ship = document.getElementById(data.newShip.name)
+            ship.classList.remove('hide')
+        }
+
         PubSub.subscribe('drag', dragover);
         PubSub.subscribe('dragLeave', dragleave);
-        PubSub.subscribe('drop', drop);
         PubSub.subscribe('dragstart', dragstart);
+        PubSub.subscribe('drop', drop);
+        PubSub.subscribe('no-option', noOption);
     
 
     },
     
+    removeShipSection () {
+        let shipSection = document.getElementById("shipcontainer")
+        shipSection.remove()
+    },
     
     drawShipsManual() {
         let main = document.getElementById("main")
         let shipList = ["carrier", "battleship", "cruiser", "submarine", "destroyer"]
-
+        let clearCheck  = document.getElementById("shipcontainer")
+        if (clearCheck !== null) clearCheck.remove()
         let shipContainer = document.createElement("div")
         shipContainer.id = "shipcontainer"
+
+        let shipSection = document.createElement("div")
+        shipSection.id = "shipsection"
+
+        let buttons = document.createElement("div")
+        buttons.id = "nav-buttons"
+
+        let deployRandom = document.createElement("button")
+        deployRandom.id = "deploy-random"
+        deployRandom.textContent = "Randomise"
+        deployRandom.addEventListener('click', (e) => {
+            PubSub.publish('deploy-random', e)
+        })
+
+        let clearBoard = document.createElement("button")
+        clearBoard.id = "clear-board"
+        clearBoard.textContent = "Clear"
+        clearBoard.addEventListener('click', (e) => {
+            PubSub.publish('clear-board', e)
+        })
+
 
         shipList.forEach(el => {
             let el1 = document.createElement("div")
@@ -482,23 +514,43 @@ function domHelper() { return {
                 e.dataTransfer.setData("text", e.target.id);
                 PubSub.publish('dragstart', e)
             })
-            shipContainer.appendChild(el1)
+            shipSection.appendChild(el1)
         })
+        buttons.appendChild(clearBoard)
+        buttons.appendChild(deployRandom)
+        shipContainer.appendChild(shipSection)
+        shipContainer.appendChild(buttons)
 
 
   
         main.appendChild(shipContainer)
     },
 
+    checkIfAllShipsPlaced() {
+        let checkDiv = document.getElementById("shipsection")
+        let removeDiv = document.getElementById("shipcontainer")
+        if (checkDiv.innerHTML == "") {
+            removeDiv.remove()
+            return true
+        }
+        else 
+            return false
+
+    },
+    
     updateCell (user, x, y, type)
         {
             let cell = document.getElementById(user + "x"+x+"y"+ y)
             switch (type) {
                 case "miss":
                     cell.classList.add("miss")
+                    cell.classList.add("material-symbols-outlined")
+                    cell.textContent = "close"
                     break
                 case "hit":
                     cell.classList.add("hit")
+                    cell.classList.add("material-symbols-outlined")
+                    cell.textContent = "local_fire_department"
             }
         },
 
@@ -506,7 +558,7 @@ function domHelper() { return {
         if (user !== "computer") {
         board.forEach(element => {
             let cell = document.getElementById(user + "x"+element.x+"y"+element.y)
-            {cell.textContent = "x"}
+            {cell.classList.add(element.name)}
         });
 
         }
@@ -515,11 +567,41 @@ function domHelper() { return {
         board.forEach(element => {
             let cell = document.getElementById(user + "x"+element.x+"y"+element.y)
             { if (element.hit == true) {   
-                cell.textContent = "x"
+                cell.classList.add(element.name)
             }
             }})
 
         }
+    },
+
+    winnerTakeover(user) {
+        let winnerDiv = document.createElement('div')
+        let winnerMsg = document.createElement('div')
+        winnerDiv.classList.add("take-over")
+        winnerMsg.textContent = user + " wins!"
+        winnerMsg.classList.add("winner-message")
+        winnerDiv.appendChild(winnerMsg)
+        document.body.appendChild(winnerDiv)
+    },
+    
+    clearBoard(board, user) {
+        if (user !== "computer") {
+            board.forEach(element => {
+                let cell = document.getElementById(user + "x"+element.x+"y"+element.y)
+                {cell.className = "field"}
+            });
+    
+            }
+            else {
+                
+            board.forEach(element => {
+                let cell = document.getElementById(user + "x"+element.x+"y"+element.y)
+                { if (element.hit == true) {   
+                    cell.className = "field"
+                }
+                }})
+    
+            }
     }
 }
 
@@ -564,7 +646,7 @@ function game(playername) { return {
         let dom = (0,_dom_helper__WEBPACK_IMPORTED_MODULE_0__.domHelper)()
         // dom.drawBoard(this.player2.name)
         dom.drawBoard(this.player1.name)
-        // dom.markShips(this.player1Gameboard.coordinates, this.player1.name)
+        dom.markShips(this.player1Gameboard.coordinates, this.player1.name)
     },
 
     deployShips(player) {
@@ -590,13 +672,19 @@ function game(playername) { return {
 
     },
 
-    deployShipManual(shipName, position) {
+    deployShipManual(shipName, x, y) {
         let shipArr = [{"name" : "carrier", "length" : 5}, {"name" : "battleship" , "length" : 4}, {"name" : "cruiser" , "length" : 3}, {"name" : "submarine" , "length" : 3}, {"name" : "destroyer" , "length" : 2}]
         let shipLength = shipArr.find(el => {
                 if (el.name == shipName)
                 {return el.length}
             })
-        let newShip = (0,_ships__WEBPACK_IMPORTED_MODULE_3__.ship)(shipLength, shipName)
+        let newShip = (0,_ships__WEBPACK_IMPORTED_MODULE_3__.ship)(shipLength.length, shipName)
+        if (!this.player1Gameboard.placeShip(newShip, x, y)) {
+            let details = {newShip, x, y}
+            pubsub_js__WEBPACK_IMPORTED_MODULE_4___default().publish('no-option', details)
+        }
+
+        return this.player1Gameboard.coordinates
     }
 
 
@@ -607,18 +695,42 @@ function game(playername) { return {
 function mainGameLoop () {
     let dom = (0,_dom_helper__WEBPACK_IMPORTED_MODULE_0__.domHelper)()
     let newGame = game("John")
-    // newGame.deployShips(newGame.player1)
+
+    var clear = function (msg,data) {
+
+        dom.clearBoard(newGame.player1Gameboard.coordinates, newGame.player1.name)
+        newGame.player1Gameboard.coordinates = []
+        dom.drawShipsManual()
+        dom.markShips(newGame.player1Gameboard.coordinates, newGame.player1.name)
+    }
+
+    var randomise = function (msg,data) {
+        dom.clearBoard(newGame.player1Gameboard.coordinates, newGame.player1.name)
+        newGame.player1Gameboard.coordinates = []
+        newGame.deployShips(newGame.player1)
+        dom.markShips(newGame.player1Gameboard.coordinates, newGame.player1.name)
+        dom.removeShipSection()
+        dom.drawBoard(newGame.player2.name)
+        dom.winnerTakeover(newGame.player1.name)
+    }
+
     newGame.deployShips(newGame.player2)
     newGame.cpuGameboard.populateMoves()
     newGame.refresh()
     dom.drawShipsManual()
+    var shipDroppped = function (msg, data) {
+        newGame.deployShipManual(data[0].id, data[1].x, data[2].y)
+        dom.markShips(newGame.player1Gameboard.coordinates, newGame.player1.name)
+        if (dom.checkIfAllShipsPlaced()) dom.drawBoard(newGame.player2.name)
+    }
+
     var mySubscriber = function (msg, data) {
         let result = newGame.cpuGameboard.receiveAttack(data[0], data[1])
         if (typeof result == "object") {
         dom.updateCell("computer", data[0], data[1],"miss")
         }
         else {dom.updateCell("computer", data[0], data[1],"hit")}
-        if (newGame.cpuGameboard.checkGameEnd()) console.log(newGame.player1.name + " wins!" )
+        if (newGame.cpuGameboard.checkGameEnd()) dom.winnerTakeover(newGame.player1.name)
 
         let cpuCoordinates = newGame.cpuGameboard.launchAttack()
         let resultcpu = newGame.player1Gameboard.receiveAttack(cpuCoordinates[0], cpuCoordinates[1])
@@ -632,11 +744,14 @@ function mainGameLoop () {
         
         
         if (newGame.player1Gameboard.checkGameEnd()) {
-            console.log(newGame.player2.name + " wins!" )
+            dom.winnerTakeover(newGame.player2.name)
             return
         }
     };
     var token = pubsub_js__WEBPACK_IMPORTED_MODULE_4___default().subscribe('button-click', mySubscriber);
+    pubsub_js__WEBPACK_IMPORTED_MODULE_4___default().subscribe('drop', shipDroppped);
+    pubsub_js__WEBPACK_IMPORTED_MODULE_4___default().subscribe('deploy-random', randomise);
+    pubsub_js__WEBPACK_IMPORTED_MODULE_4___default().subscribe('clear-board', clear);
 
     
 
@@ -673,7 +788,8 @@ function gameboard () { return {
 
     evaluatePlacement(ship, x, y) {
         let possiblePlacements = []
-        let placementsClone = []
+        x = parseInt(x)
+        y = parseInt(y)
         
         for (let i=0; i<ship.length; i++) {
             let coordsRight = {
