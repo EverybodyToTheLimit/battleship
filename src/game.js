@@ -41,8 +41,14 @@ function game(playername) { return {
 
     },
 
-
-
+    deployShipManual(shipName, position) {
+        let shipArr = [{"name" : "carrier", "length" : 5}, {"name" : "battleship" , "length" : 4}, {"name" : "cruiser" , "length" : 3}, {"name" : "submarine" , "length" : 3}, {"name" : "destroyer" , "length" : 2}]
+        let shipLength = shipArr.find(el => {
+                if (el.name == shipName)
+                {return el.length}
+            })
+        let newShip = ship(shipLength, shipName)
+    }
 
 
 }
@@ -52,7 +58,7 @@ function game(playername) { return {
 function mainGameLoop () {
     let dom = domHelper()
     let newGame = game("John")
-    newGame.deployShips(newGame.player1)
+    // newGame.deployShips(newGame.player1)
     newGame.deployShips(newGame.player2)
     newGame.cpuGameboard.populateMoves()
     newGame.refresh()

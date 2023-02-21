@@ -383,6 +383,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function domHelper() { return {
+    
 
     drawBoard(user) {
 
@@ -401,9 +402,15 @@ function domHelper() { return {
                 field.addEventListener('dragOver', (e) => {
                     PubSub.publish('drag', e)})
                 field.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
                     PubSub.publish('dragLeave', e)})
-                field.addEventListener('drop', (e) => {
-                    PubSub.publish('drop', e)})
+                field.addEventListener("drop", (e) => {
+                    e.preventDefault()
+                    let id = e.dataTransfer.getData('text');
+                    let message = []
+                    message.push({"id" : id}, {"dest": e.target})
+
+                    PubSub.publish('drop', message)})
                 if (user == "computer") {
                     field.addEventListener('click', () => {
                         PubSub.publish('button-click', [j, i]);
@@ -420,6 +427,11 @@ function domHelper() { return {
     },
 
     draggAndDrop () {
+
+        document.addEventListener("dragover", function(event) {
+            event.preventDefault();
+          });
+
         var dragover = function (msg, data) {
             data.preventDefault();
             data.target.classList.add('drag-over');
@@ -429,21 +441,17 @@ function domHelper() { return {
             data.target.classList.remove('drag-over');
         }
         var drop = function (msg, data) {
-            data.target.classList.remove('drag-over');
+
 
             // get the draggable element
-            const id = data.dataTransfer.getData('text/plain');
-            const draggable = document.getElementById(id);
-
-            // add it to the drop target
-            data.target.appendChild(draggable);
-
-            // display the draggable element
-            draggable.classList.remove('hide');
+            const draggable = document.getElementById(data);
+            _game__WEBPACK_IMPORTED_MODULE_0__.game.deployShipManual(data)
         }
 
         var dragstart = function(message, data) {
-            data.dataTransfer.setData('text/plain', data.target.id);
+            data.preventDefault();
+            data.dataTransfer.setData("text", data.target.id);
+            console.log(data.dataTransfer)
             setTimeout(() => {
                 data.target.classList.add('hide');
             }, 0);
@@ -471,10 +479,13 @@ function domHelper() { return {
             el1.className = "ship"
             el1.draggable = true
             el1.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData("text", e.target.id);
                 PubSub.publish('dragstart', e)
             })
             shipContainer.appendChild(el1)
         })
+
+
   
         main.appendChild(shipContainer)
     },
@@ -579,8 +590,14 @@ function game(playername) { return {
 
     },
 
-
-
+    deployShipManual(shipName, position) {
+        let shipArr = [{"name" : "carrier", "length" : 5}, {"name" : "battleship" , "length" : 4}, {"name" : "cruiser" , "length" : 3}, {"name" : "submarine" , "length" : 3}, {"name" : "destroyer" , "length" : 2}]
+        let shipLength = shipArr.find(el => {
+                if (el.name == shipName)
+                {return el.length}
+            })
+        let newShip = (0,_ships__WEBPACK_IMPORTED_MODULE_3__.ship)(shipLength, shipName)
+    }
 
 
 }
@@ -590,7 +607,7 @@ function game(playername) { return {
 function mainGameLoop () {
     let dom = (0,_dom_helper__WEBPACK_IMPORTED_MODULE_0__.domHelper)()
     let newGame = game("John")
-    newGame.deployShips(newGame.player1)
+    // newGame.deployShips(newGame.player1)
     newGame.deployShips(newGame.player2)
     newGame.cpuGameboard.populateMoves()
     newGame.refresh()
