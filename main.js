@@ -16,12 +16,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/getUrl.js */ "./node_modules/css-loader/dist/runtime/getUrl.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);
 // Imports
 
 
+
+var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ./flame.svg */ "./src/flame.svg"), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(/*! ./splash.svg */ "./src/splash.svg"), __webpack_require__.b);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
+var ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".field {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    font-size: x-large;\n    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n    width:50px;\n    height: 50px;\n    border-width: 1px;\n    border-style: solid;\n    border-color: #52483b;\n}\n\n.row {\n    display: flex;\n    flex-direction: row;\n}\n\n#main {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    justify-content: center;\n    align-items: center;\n    gap: 30px;\n}\n\n.hit {\n    display:flex;\n    justify-content: center;\n    align-items: center;\n    background-color: #efa00b;\n    color: #800000;\n    pointer-events: none;\n}\n\n.take-over {\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    left: 0;\n    top: 0;\n    background-color: rgba(128, 128, 128, 0.281);\n    backdrop-filter: blur(8px); \n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    gap: 10px;\n    display: flex\n}\n\n.winner-message {\n    font-size: xx-large;\n}\n\n.miss {\n    display:flex;\n    justify-content: center;\n    align-items: center;\n    color: #aca9a5;\n    pointer-events: none;\n}\n\n#nav-buttons {\n    display: flex;\n    gap: 10px;\n    height: 50px;\n    margin-top: 50px;\n    width: 100%;\n}\n\n\nbutton {\n\nwidth: 120px;\n  background-color: #FFFFFF;\n  border: 1px solid rgb(209,213,219);\n  border-radius: .5rem;\n  box-sizing: border-box;\n  color: #111827;\n  font-family: \"Inter var\",ui-sans-serif,system-ui,-apple-system,system-ui,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\";\n  font-size: .875rem;\n  font-weight: 600;\n  line-height: 1.25rem;\n  padding: .75rem 1rem;\n  text-align: center;\n  text-decoration: none #D1D5DB solid;\n  text-decoration-thickness: auto;\n  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);\n  cursor: pointer;\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n}\n\nbutton:hover {\n  background-color: rgb(249,250,251);\n}\n\nbutton:focus {\n  outline: 2px solid transparent;\n  outline-offset: 2px;\n}\n\nbutton:focus-visible {\n  box-shadow: none;\n}\n\n\n#shipsection {\n    display: flex;\n    height: 100%;\n    flex-direction: column;\n    justify-content: center;\n    gap: 10px;\n}\n\n#shipcontainer {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between\n}\n\n.material-symbols-outlined {\n    font-variation-settings:\n    'FILL' 0,\n    'wght' 400,\n    'GRAD' 0,\n    'opsz' 48\n  }\n\n.ship {\n    display:flex;\n    height: 50px;\n}\n\n#carrier { \n    width: 250px;\n    background-color: #b1ddf1;\n}\n\n#battleship { \n    width: 200px;\n    background-color: #9f87af;\n}\n\n#cruiser { \n    width: 150px;\n    background-color: #88527f;\n}\n\n#submarine { \n    width: 150px;\n    background-color: #614344;\n}\n\n#destroyer { \n    width: 100px;\n    background-color: #332c23;\n}\n\n.carrier { \n    background-color: #b1ddf1;\n}\n\n.battleship { \n    background-color: #9f87af;\n}\n\n.cruiser { \n    background-color: #88527f;\n}\n\n.submarine { \n    background-color: #614344;\n}\n\n.destroyer { \n    background-color: #332c23;\n}\n\n.drag-over {\n    background-color: #575a4b7c;\n}\n\n.hide {\n    display: none;\n}", "",{"version":3,"sources":["webpack://./src/styles.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,uBAAuB;IACvB,mBAAmB;IACnB,kBAAkB;IAClB,4DAA4D;IAC5D,UAAU;IACV,YAAY;IACZ,iBAAiB;IACjB,mBAAmB;IACnB,qBAAqB;AACzB;;AAEA;IACI,aAAa;IACb,mBAAmB;AACvB;;AAEA;IACI,aAAa;IACb,8BAA8B;IAC9B,uBAAuB;IACvB,mBAAmB;IACnB,SAAS;AACb;;AAEA;IACI,YAAY;IACZ,uBAAuB;IACvB,mBAAmB;IACnB,yBAAyB;IACzB,cAAc;IACd,oBAAoB;AACxB;;AAEA;IACI,WAAW;IACX,YAAY;IACZ,kBAAkB;IAClB,OAAO;IACP,MAAM;IACN,4CAA4C;IAC5C,0BAA0B;IAC1B,sBAAsB;IACtB,uBAAuB;IACvB,mBAAmB;IACnB,SAAS;IACT;AACJ;;AAEA;IACI,mBAAmB;AACvB;;AAEA;IACI,YAAY;IACZ,uBAAuB;IACvB,mBAAmB;IACnB,cAAc;IACd,oBAAoB;AACxB;;AAEA;IACI,aAAa;IACb,SAAS;IACT,YAAY;IACZ,gBAAgB;IAChB,WAAW;AACf;;;AAGA;;AAEA,YAAY;EACV,yBAAyB;EACzB,kCAAkC;EAClC,oBAAoB;EACpB,sBAAsB;EACtB,cAAc;EACd,kNAAkN;EAClN,kBAAkB;EAClB,gBAAgB;EAChB,oBAAoB;EACpB,oBAAoB;EACpB,kBAAkB;EAClB,mCAAmC;EACnC,+BAA+B;EAC/B,2CAA2C;EAC3C,eAAe;EACf,iBAAiB;EACjB,yBAAyB;EACzB,0BAA0B;AAC5B;;AAEA;EACE,kCAAkC;AACpC;;AAEA;EACE,8BAA8B;EAC9B,mBAAmB;AACrB;;AAEA;EACE,gBAAgB;AAClB;;;AAGA;IACI,aAAa;IACb,YAAY;IACZ,sBAAsB;IACtB,uBAAuB;IACvB,SAAS;AACb;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB;AACJ;;AAEA;IACI;;;;;EAKF;;AAEF;IACI,YAAY;IACZ,YAAY;AAChB;;AAEA;IACI,YAAY;IACZ,yBAAyB;AAC7B;;AAEA;IACI,YAAY;IACZ,yBAAyB;AAC7B;;AAEA;IACI,YAAY;IACZ,yBAAyB;AAC7B;;AAEA;IACI,YAAY;IACZ,yBAAyB;AAC7B;;AAEA;IACI,YAAY;IACZ,yBAAyB;AAC7B;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,2BAA2B;AAC/B;;AAEA;IACI,aAAa;AACjB","sourcesContent":[".field {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    font-size: x-large;\n    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n    width:50px;\n    height: 50px;\n    border-width: 1px;\n    border-style: solid;\n    border-color: #52483b;\n}\n\n.row {\n    display: flex;\n    flex-direction: row;\n}\n\n#main {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    justify-content: center;\n    align-items: center;\n    gap: 30px;\n}\n\n.hit {\n    display:flex;\n    justify-content: center;\n    align-items: center;\n    background-color: #efa00b;\n    color: #800000;\n    pointer-events: none;\n}\n\n.take-over {\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    left: 0;\n    top: 0;\n    background-color: rgba(128, 128, 128, 0.281);\n    backdrop-filter: blur(8px); \n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    gap: 10px;\n    display: flex\n}\n\n.winner-message {\n    font-size: xx-large;\n}\n\n.miss {\n    display:flex;\n    justify-content: center;\n    align-items: center;\n    color: #aca9a5;\n    pointer-events: none;\n}\n\n#nav-buttons {\n    display: flex;\n    gap: 10px;\n    height: 50px;\n    margin-top: 50px;\n    width: 100%;\n}\n\n\nbutton {\n\nwidth: 120px;\n  background-color: #FFFFFF;\n  border: 1px solid rgb(209,213,219);\n  border-radius: .5rem;\n  box-sizing: border-box;\n  color: #111827;\n  font-family: \"Inter var\",ui-sans-serif,system-ui,-apple-system,system-ui,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\";\n  font-size: .875rem;\n  font-weight: 600;\n  line-height: 1.25rem;\n  padding: .75rem 1rem;\n  text-align: center;\n  text-decoration: none #D1D5DB solid;\n  text-decoration-thickness: auto;\n  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);\n  cursor: pointer;\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n}\n\nbutton:hover {\n  background-color: rgb(249,250,251);\n}\n\nbutton:focus {\n  outline: 2px solid transparent;\n  outline-offset: 2px;\n}\n\nbutton:focus-visible {\n  box-shadow: none;\n}\n\n\n#shipsection {\n    display: flex;\n    height: 100%;\n    flex-direction: column;\n    justify-content: center;\n    gap: 10px;\n}\n\n#shipcontainer {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between\n}\n\n.material-symbols-outlined {\n    font-variation-settings:\n    'FILL' 0,\n    'wght' 400,\n    'GRAD' 0,\n    'opsz' 48\n  }\n\n.ship {\n    display:flex;\n    height: 50px;\n}\n\n#carrier { \n    width: 250px;\n    background-color: #b1ddf1;\n}\n\n#battleship { \n    width: 200px;\n    background-color: #9f87af;\n}\n\n#cruiser { \n    width: 150px;\n    background-color: #88527f;\n}\n\n#submarine { \n    width: 150px;\n    background-color: #614344;\n}\n\n#destroyer { \n    width: 100px;\n    background-color: #332c23;\n}\n\n.carrier { \n    background-color: #b1ddf1;\n}\n\n.battleship { \n    background-color: #9f87af;\n}\n\n.cruiser { \n    background-color: #88527f;\n}\n\n.submarine { \n    background-color: #614344;\n}\n\n.destroyer { \n    background-color: #332c23;\n}\n\n.drag-over {\n    background-color: #575a4b7c;\n}\n\n.hide {\n    display: none;\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".field {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    font-size: x-large;\n    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n    width:50px;\n    height: 50px;\n    border-width: 1px;\n    border-style: solid;\n    border-color: #52483b;\n}\n\n.row {\n    display: flex;\n    flex-direction: row;\n}\n\n#main {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    justify-content: center;\n    align-items: center;\n    gap: 30px;\n}\n\n.hit {\n    display:flex;\n    justify-content: center;\n    align-items: center;\n    background-color: #efa00b;\n    color: #800000;\n    pointer-events: none;\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n    background-size: cover;\n}\n\n\n.take-over {\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    left: 0;\n    top: 0;\n    background-color: rgba(128, 128, 128, 0.281);\n    backdrop-filter: blur(8px); \n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    gap: 10px;\n    display: flex\n}\n\n.winner-message {\n    font-size: xx-large;\n}\n\n.miss {\n    display:flex;\n    justify-content: center;\n    align-items: center;\n    color: #aca9a5;\n    pointer-events: none;\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n    background-size: cover;\n}\n\n#nav-buttons {\n    display: flex;\n    gap: 10px;\n    height: 50px;\n    margin-top: 50px;\n    width: 100%;\n}\n\n\nbutton {\n\nwidth: 120px;\n  background-color: #FFFFFF;\n  border: 1px solid rgb(209,213,219);\n  border-radius: .5rem;\n  box-sizing: border-box;\n  color: #111827;\n  font-family: \"Inter var\",ui-sans-serif,system-ui,-apple-system,system-ui,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\";\n  font-size: .875rem;\n  font-weight: 600;\n  line-height: 1.25rem;\n  padding: .75rem 1rem;\n  text-align: center;\n  text-decoration: none #D1D5DB solid;\n  text-decoration-thickness: auto;\n  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);\n  cursor: pointer;\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n}\n\nbutton:hover {\n  background-color: rgb(249,250,251);\n}\n\nbutton:focus {\n  outline: 2px solid transparent;\n  outline-offset: 2px;\n}\n\nbutton:focus-visible {\n  box-shadow: none;\n}\n\n\n#shipsection {\n    display: flex;\n    height: 100%;\n    flex-direction: column;\n    justify-content: center;\n    gap: 10px;\n}\n\n#shipcontainer {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between\n}\n\n.material-symbols-outlined {\n    font-variation-settings:\n    'FILL' 0,\n    'wght' 400,\n    'GRAD' 0,\n    'opsz' 48\n  }\n\n.ship {\n    display:flex;\n    height: 50px;\n}\n\n#carrier { \n    width: 250px;\n    background-color: #b1ddf1;\n}\n\n#battleship { \n    width: 200px;\n    background-color: #9f87af;\n}\n\n#cruiser { \n    width: 150px;\n    background-color: #88527f;\n}\n\n#submarine { \n    width: 150px;\n    background-color: #614344;\n}\n\n#destroyer { \n    width: 100px;\n    background-color: #332c23;\n}\n\n.carrier { \n    background-color: #b1ddf1;\n}\n\n.battleship { \n    background-color: #9f87af;\n}\n\n.cruiser { \n    background-color: #88527f;\n}\n\n.submarine { \n    background-color: #614344;\n}\n\n.destroyer { \n    background-color: #332c23;\n}\n\n.drag-over {\n    background-color: #575a4b7c;\n}\n\n.hide {\n    display: none;\n}", "",{"version":3,"sources":["webpack://./src/styles.css"],"names":[],"mappings":"AAAA;IACI,aAAa;IACb,uBAAuB;IACvB,mBAAmB;IACnB,kBAAkB;IAClB,4DAA4D;IAC5D,UAAU;IACV,YAAY;IACZ,iBAAiB;IACjB,mBAAmB;IACnB,qBAAqB;AACzB;;AAEA;IACI,aAAa;IACb,mBAAmB;AACvB;;AAEA;IACI,aAAa;IACb,8BAA8B;IAC9B,uBAAuB;IACvB,mBAAmB;IACnB,SAAS;AACb;;AAEA;IACI,YAAY;IACZ,uBAAuB;IACvB,mBAAmB;IACnB,yBAAyB;IACzB,cAAc;IACd,oBAAoB;IACpB,yDAAkC;IAClC,sBAAsB;AAC1B;;;AAGA;IACI,WAAW;IACX,YAAY;IACZ,kBAAkB;IAClB,OAAO;IACP,MAAM;IACN,4CAA4C;IAC5C,0BAA0B;IAC1B,sBAAsB;IACtB,uBAAuB;IACvB,mBAAmB;IACnB,SAAS;IACT;AACJ;;AAEA;IACI,mBAAmB;AACvB;;AAEA;IACI,YAAY;IACZ,uBAAuB;IACvB,mBAAmB;IACnB,cAAc;IACd,oBAAoB;IACpB,yDAAmC;IACnC,sBAAsB;AAC1B;;AAEA;IACI,aAAa;IACb,SAAS;IACT,YAAY;IACZ,gBAAgB;IAChB,WAAW;AACf;;;AAGA;;AAEA,YAAY;EACV,yBAAyB;EACzB,kCAAkC;EAClC,oBAAoB;EACpB,sBAAsB;EACtB,cAAc;EACd,kNAAkN;EAClN,kBAAkB;EAClB,gBAAgB;EAChB,oBAAoB;EACpB,oBAAoB;EACpB,kBAAkB;EAClB,mCAAmC;EACnC,+BAA+B;EAC/B,2CAA2C;EAC3C,eAAe;EACf,iBAAiB;EACjB,yBAAyB;EACzB,0BAA0B;AAC5B;;AAEA;EACE,kCAAkC;AACpC;;AAEA;EACE,8BAA8B;EAC9B,mBAAmB;AACrB;;AAEA;EACE,gBAAgB;AAClB;;;AAGA;IACI,aAAa;IACb,YAAY;IACZ,sBAAsB;IACtB,uBAAuB;IACvB,SAAS;AACb;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB;AACJ;;AAEA;IACI;;;;;EAKF;;AAEF;IACI,YAAY;IACZ,YAAY;AAChB;;AAEA;IACI,YAAY;IACZ,yBAAyB;AAC7B;;AAEA;IACI,YAAY;IACZ,yBAAyB;AAC7B;;AAEA;IACI,YAAY;IACZ,yBAAyB;AAC7B;;AAEA;IACI,YAAY;IACZ,yBAAyB;AAC7B;;AAEA;IACI,YAAY;IACZ,yBAAyB;AAC7B;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,2BAA2B;AAC/B;;AAEA;IACI,aAAa;AACjB","sourcesContent":[".field {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    font-size: x-large;\n    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n    width:50px;\n    height: 50px;\n    border-width: 1px;\n    border-style: solid;\n    border-color: #52483b;\n}\n\n.row {\n    display: flex;\n    flex-direction: row;\n}\n\n#main {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    justify-content: center;\n    align-items: center;\n    gap: 30px;\n}\n\n.hit {\n    display:flex;\n    justify-content: center;\n    align-items: center;\n    background-color: #efa00b;\n    color: #800000;\n    pointer-events: none;\n    background-image: url(./flame.svg);\n    background-size: cover;\n}\n\n\n.take-over {\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    left: 0;\n    top: 0;\n    background-color: rgba(128, 128, 128, 0.281);\n    backdrop-filter: blur(8px); \n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    gap: 10px;\n    display: flex\n}\n\n.winner-message {\n    font-size: xx-large;\n}\n\n.miss {\n    display:flex;\n    justify-content: center;\n    align-items: center;\n    color: #aca9a5;\n    pointer-events: none;\n    background-image: url(./splash.svg);\n    background-size: cover;\n}\n\n#nav-buttons {\n    display: flex;\n    gap: 10px;\n    height: 50px;\n    margin-top: 50px;\n    width: 100%;\n}\n\n\nbutton {\n\nwidth: 120px;\n  background-color: #FFFFFF;\n  border: 1px solid rgb(209,213,219);\n  border-radius: .5rem;\n  box-sizing: border-box;\n  color: #111827;\n  font-family: \"Inter var\",ui-sans-serif,system-ui,-apple-system,system-ui,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\";\n  font-size: .875rem;\n  font-weight: 600;\n  line-height: 1.25rem;\n  padding: .75rem 1rem;\n  text-align: center;\n  text-decoration: none #D1D5DB solid;\n  text-decoration-thickness: auto;\n  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);\n  cursor: pointer;\n  user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n}\n\nbutton:hover {\n  background-color: rgb(249,250,251);\n}\n\nbutton:focus {\n  outline: 2px solid transparent;\n  outline-offset: 2px;\n}\n\nbutton:focus-visible {\n  box-shadow: none;\n}\n\n\n#shipsection {\n    display: flex;\n    height: 100%;\n    flex-direction: column;\n    justify-content: center;\n    gap: 10px;\n}\n\n#shipcontainer {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between\n}\n\n.material-symbols-outlined {\n    font-variation-settings:\n    'FILL' 0,\n    'wght' 400,\n    'GRAD' 0,\n    'opsz' 48\n  }\n\n.ship {\n    display:flex;\n    height: 50px;\n}\n\n#carrier { \n    width: 250px;\n    background-color: #b1ddf1;\n}\n\n#battleship { \n    width: 200px;\n    background-color: #9f87af;\n}\n\n#cruiser { \n    width: 150px;\n    background-color: #88527f;\n}\n\n#submarine { \n    width: 150px;\n    background-color: #614344;\n}\n\n#destroyer { \n    width: 100px;\n    background-color: #332c23;\n}\n\n.carrier { \n    background-color: #b1ddf1;\n}\n\n.battleship { \n    background-color: #9f87af;\n}\n\n.cruiser { \n    background-color: #88527f;\n}\n\n.submarine { \n    background-color: #614344;\n}\n\n.destroyer { \n    background-color: #332c23;\n}\n\n.drag-over {\n    background-color: #575a4b7c;\n}\n\n.hide {\n    display: none;\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -119,6 +126,42 @@ module.exports = function (cssWithMappingToString) {
     }
   };
   return list;
+};
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/runtime/getUrl.js":
+/*!********************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/getUrl.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = function (url, options) {
+  if (!options) {
+    options = {};
+  }
+  if (!url) {
+    return url;
+  }
+  url = String(url.__esModule ? url.default : url);
+
+  // If url is already wrapped in quotes, remove them
+  if (/^['"].*['"]$/.test(url)) {
+    url = url.slice(1, -1);
+  }
+  if (options.hash) {
+    url += options.hash;
+  }
+
+  // Should url be wrapped?
+  // See https://drafts.csswg.org/css-values-3/#urls
+  if (/["'() \t\n]|(%20)/.test(url) || options.needQuotes) {
+    return "\"".concat(url.replace(/"/g, '\\"').replace(/\n/g, "\\n"), "\"");
+  }
+  return url;
 };
 
 /***/ }),
@@ -1059,13 +1102,10 @@ function domHelper() { return {
             switch (type) {
                 case "miss":
                     cell.classList.add("miss")
-                    cell.classList.add("material-symbols-outlined")
-                    cell.textContent = "close"
                     break
                 case "hit":
                     cell.classList.add("hit")
-                    cell.classList.add("material-symbols-outlined")
-                    cell.textContent = "local_fire_department"
+                    break
             }
         },
 
@@ -1555,6 +1595,28 @@ function ship (length, name) {return {
 
 
 
+/***/ }),
+
+/***/ "./src/flame.svg":
+/*!***********************!*\
+  !*** ./src/flame.svg ***!
+  \***********************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "05b81a48501353f5ffc0.svg";
+
+/***/ }),
+
+/***/ "./src/splash.svg":
+/*!************************!*\
+  !*** ./src/splash.svg ***!
+  \************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "71750b99b0d035713347.svg";
+
 /***/ })
 
 /******/ 	});
@@ -1586,6 +1648,9 @@ function ship (length, name) {return {
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -1609,6 +1674,18 @@ function ship (length, name) {return {
 /******/ 				}
 /******/ 			}
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
@@ -1636,6 +1713,52 @@ function ship (length, name) {return {
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) scriptUrl = scripts[scripts.length - 1].src
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		__webpack_require__.b = document.baseURI || self.location.href;
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			"main": 0
+/******/ 		};
+/******/ 		
+/******/ 		// no chunk on demand loading
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		// no on chunks loaded
+/******/ 		
+/******/ 		// no jsonp function
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/nonce */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nc = undefined;
@@ -1652,6 +1775,7 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _game_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game.js */ "./src/game.js");
 /* harmony import */ var _src_styles_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/styles.css */ "./src/styles.css");
+
 
 
 
