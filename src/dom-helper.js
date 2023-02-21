@@ -162,13 +162,10 @@ function domHelper() { return {
             switch (type) {
                 case "miss":
                     cell.classList.add("miss")
-                    cell.classList.add("material-symbols-outlined")
-                    cell.textContent = "close"
                     break
                 case "hit":
                     cell.classList.add("hit")
-                    cell.classList.add("material-symbols-outlined")
-                    cell.textContent = "local_fire_department"
+                    break
             }
         },
 

@@ -31,7 +31,10 @@
     background-color: #efa00b;
     color: #800000;
     pointer-events: none;
+    background-image: url(./flame.svg);
+    background-size: cover;
 }
+
 
 .take-over {
     width: 100%;
@@ -58,6 +61,8 @@
     align-items: center;
     color: #aca9a5;
     pointer-events: none;
+    background-image: url(./splash.svg);
+    background-size: cover;
 }
 
 #nav-buttons {
