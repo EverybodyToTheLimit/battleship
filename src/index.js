@@ -1,3 +1,3 @@
-import { mainGameLoop} from "./game.js";
+import { game, mainGameLoop} from "./game.js";
 
 mainGameLoop()

@@ -15,7 +15,7 @@ function game(playername) { return {
         let dom = domHelper()
         // dom.drawBoard(this.player2.name)
         dom.drawBoard(this.player1.name)
-        // dom.markShips(this.player1Gameboard.coordinates, this.player1.name)
+        dom.markShips(this.player1Gameboard.coordinates, this.player1.name)
     },
 
     deployShips(player) {
@@ -41,13 +41,19 @@ function game(playername) { return {
 
     },
 
-    deployShipManual(shipName, position) {
+    deployShipManual(shipName, x, y) {
         let shipArr = [{"name" : "carrier", "length" : 5}, {"name" : "battleship" , "length" : 4}, {"name" : "cruiser" , "length" : 3}, {"name" : "submarine" , "length" : 3}, {"name" : "destroyer" , "length" : 2}]
         let shipLength = shipArr.find(el => {
                 if (el.name == shipName)
                 {return el.length}
             })
-        let newShip = ship(shipLength, shipName)
+        let newShip = ship(shipLength.length, shipName)
+        if (!this.player1Gameboard.placeShip(newShip, x, y)) {
+            let details = {newShip, x, y}
+            PubSub.publish('no-option', details)
+        }
+
+        return this.player1Gameboard.coordinates
     }
 
 
@@ -58,18 +64,42 @@ function game(playername) { return {
 function mainGameLoop () {
     let dom = domHelper()
     let newGame = game("John")
-    // newGame.deployShips(newGame.player1)
+
+    var clear = function (msg,data) {
+
+        dom.clearBoard(newGame.player1Gameboard.coordinates, newGame.player1.name)
+        newGame.player1Gameboard.coordinates = []
+        dom.drawShipsManual()
+        dom.markShips(newGame.player1Gameboard.coordinates, newGame.player1.name)
+    }
+
+    var randomise = function (msg,data) {
+        dom.clearBoard(newGame.player1Gameboard.coordinates, newGame.player1.name)
+        newGame.player1Gameboard.coordinates = []
+        newGame.deployShips(newGame.player1)
+        dom.markShips(newGame.player1Gameboard.coordinates, newGame.player1.name)
+        dom.removeShipSection()
+        dom.drawBoard(newGame.player2.name)
+        dom.winnerTakeover(newGame.player1.name)
+    }
+
     newGame.deployShips(newGame.player2)
     newGame.cpuGameboard.populateMoves()
     newGame.refresh()
     dom.drawShipsManual()
+    var shipDroppped = function (msg, data) {
+        newGame.deployShipManual(data[0].id, data[1].x, data[2].y)
+        dom.markShips(newGame.player1Gameboard.coordinates, newGame.player1.name)
+        if (dom.checkIfAllShipsPlaced()) dom.drawBoard(newGame.player2.name)
+    }
+
     var mySubscriber = function (msg, data) {
         let result = newGame.cpuGameboard.receiveAttack(data[0], data[1])
         if (typeof result == "object") {
         dom.updateCell("computer", data[0], data[1],"miss")
         }
         else {dom.updateCell("computer", data[0], data[1],"hit")}
-        if (newGame.cpuGameboard.checkGameEnd()) console.log(newGame.player1.name + " wins!" )
+        if (newGame.cpuGameboard.checkGameEnd()) dom.winnerTakeover(newGame.player1.name)
 
         let cpuCoordinates = newGame.cpuGameboard.launchAttack()
         let resultcpu = newGame.player1Gameboard.receiveAttack(cpuCoordinates[0], cpuCoordinates[1])
@@ -83,11 +113,14 @@ function mainGameLoop () {
         
         
         if (newGame.player1Gameboard.checkGameEnd()) {
-            console.log(newGame.player2.name + " wins!" )
+            dom.winnerTakeover(newGame.player2.name)
             return
         }
     };
     var token = PubSub.subscribe('button-click', mySubscriber);
+    PubSub.subscribe('drop', shipDroppped);
+    PubSub.subscribe('deploy-random', randomise);
+    PubSub.subscribe('clear-board', clear);
 
     
 

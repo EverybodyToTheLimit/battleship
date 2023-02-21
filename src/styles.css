@@ -25,22 +25,108 @@
 }
 
 .hit {
-    background-color: #88527F;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #efa00b;
+    color: #800000;
     pointer-events: none;
+}
+
+.take-over {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgba(128, 128, 128, 0.281);
+    backdrop-filter: blur(8px); 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    display: flex
+}
+
+.winner-message {
+    font-size: xx-large;
 }
 
 .miss {
-    background-color: #B1DDF1;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color: #aca9a5;
     pointer-events: none;
 }
 
-#shipcontainer {
+#nav-buttons {
+    display: flex;
+    gap: 10px;
+    height: 50px;
+    margin-top: 50px;
+    width: 100%;
+}
+
+
+button {
+
+width: 120px;
+  background-color: #FFFFFF;
+  border: 1px solid rgb(209,213,219);
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: .75rem 1rem;
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+button:hover {
+  background-color: rgb(249,250,251);
+}
+
+button:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+button:focus-visible {
+  box-shadow: none;
+}
+
+
+#shipsection {
     display: flex;
     height: 100%;
     flex-direction: column;
     justify-content: center;
     gap: 10px;
 }
+
+#shipcontainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48
+  }
 
 .ship {
     display:flex;
@@ -63,12 +149,32 @@
 }
 
 #submarine { 
-    width: 100px;
+    width: 150px;
     background-color: #614344;
 }
 
 #destroyer { 
     width: 100px;
+    background-color: #332c23;
+}
+
+.carrier { 
+    background-color: #b1ddf1;
+}
+
+.battleship { 
+    background-color: #9f87af;
+}
+
+.cruiser { 
+    background-color: #88527f;
+}
+
+.submarine { 
+    background-color: #614344;
+}
+
+.destroyer { 
     background-color: #332c23;
 }
 

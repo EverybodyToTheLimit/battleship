@@ -12,7 +12,8 @@ function gameboard () { return {
 
     evaluatePlacement(ship, x, y) {
         let possiblePlacements = []
-        let placementsClone = []
+        x = parseInt(x)
+        y = parseInt(y)
         
         for (let i=0; i<ship.length; i++) {
             let coordsRight = {
